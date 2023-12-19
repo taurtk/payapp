@@ -1,39 +1,52 @@
-// src/components/LoginForm.js
+// src/components/RegisterForm.js
 import React from 'react';
-import { View, Text,StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 
-const LoginScreen= () => {
+const LoginScreen = ({navigation}) => {
   const validationSchema = Yup.object({
-    mobileNumber: Yup.string().matches(/^[0-9]{10}$/, 'Invalid mobile number').required('Required'),
-    password: Yup.string().required('Required'),
+    
+    phoneNumber: Yup.string().matches(/^[0-9]{10}$/, 'Invalid phone number').required('Required'),
+   
   });
 
   const handleSubmit = (values) => {
-    // Handle login logic here
-    console.log(values);
+    // Handle registration logic here
+    let phoneNumber = values.phoneNumber;
+    const hardcodedMobileNumber = '6370157193';
+
+    // Check if the entered mobile number matches the hardcoded value
+    if (phoneNumber === hardcodedMobileNumber) {
+      // Navigate to the Home screen on successful login
+      navigation.navigate('Dashboard');
+    } else {
+      // Display an error message or handle the unsuccessful login scenario
+      console.log('Invalid mobile number');
+    }
   };
+
   return (
-    <View style={styles.container}>
+    <View style={styles.form}>
       <Text style={styles.title}>Login</Text>
       <Formik
-        initialValues={{ mobileNumber: '', password: '' }}
+        initialValues={{  phoneNumber: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-          <View style={styles.form}>
+          <View>
+            
             <InputField
-              label="Mobile Number"
-              value={values.mobileNumber}
-              onChangeText={handleChange('mobileNumber')}
+              label="Phone Number"
+              value={values.phoneNumber}
+              onChangeText={handleChange('phoneNumber')}
               keyboardType="numeric"
               style={styles.input}
             />
-            {errors.mobileNumber && <Text style={styles.error}>{errors.mobileNumber}</Text>}
+            {errors.phoneNumber && <Text style={styles.error}>{errors.phoneNumber}</Text>}
 
             
 
@@ -46,7 +59,7 @@ const LoginScreen= () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  form: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -55,9 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-  },
-  form: {
-    width: '80%',
   },
   input: {
     marginBottom: 10,
@@ -70,6 +80,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-
 
 export default LoginScreen;

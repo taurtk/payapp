@@ -4,10 +4,10 @@ import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
 import Button from "../components/Button";
 
 const navigateToLogin = () => {
-  navigation.navigate('Login');
+ 
 };
 const navigateToRegister = () => {
-  navigation.navigate('Register');
+ 
 };
 function HomeScreen({ navigation }) {
   return (
@@ -21,8 +21,8 @@ function HomeScreen({ navigation }) {
         <Text style={styles.tagline}>Travel where ever you want</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Button title="Login" onPress={navigateToLogin} />
-        <Button title="Register"  onPress={navigateToRegister} color="secondary" />
+        <Button title="Login" onPress={()=>{ navigation.navigate('Login');}} />
+        <Button title="Register"  onPress={()=>{ navigation.navigate('Register');}} color="secondary" />
       </View>
     </ImageBackground>
   );
