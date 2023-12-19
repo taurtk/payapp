@@ -1,46 +1,45 @@
-// src/components/LoginForm.js
-import React from 'react';
-import { View, Text,StyleSheet } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import InputField from '../components/InputField';
-import Button from '../components/Button';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const LoginScreen= () => {
-  const validationSchema = Yup.object({
-    mobileNumber: Yup.string().matches(/^[0-9]{10}$/, 'Invalid mobile number').required('Required'),
-    password: Yup.string().required('Required'),
-  });
+const LoginScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmit = (values) => {
-    // Handle login logic here
-    console.log(values);
+  const handleLogin = () => {
+    // Hardcoded values for demonstration purposes
+    const hardcodedUsername = 'demoUser';
+    const hardcodedPassword = 'demoPassword';
+
+    // Check if the entered credentials match the hardcoded values
+    if (username === hardcodedUsername && password === hardcodedPassword) {
+      // Navigate to the Home screen on successful login
+      navigation.navigate('Dashboard');
+    } else {
+      // Display an error message or handle the unsuccessful login scenario
+      console.log('Invalid credentials');
+    }
   };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Formik
-        initialValues={{ mobileNumber: '', password: '' }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-          <View style={styles.form}>
-            <InputField
-              label="Mobile Number"
-              value={values.mobileNumber}
-              onChangeText={handleChange('mobileNumber')}
-              keyboardType="numeric"
-              style={styles.input}
-            />
-            {errors.mobileNumber && <Text style={styles.error}>{errors.mobileNumber}</Text>}
+      <Text style={styles.header}>Login</Text>
 
-            
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={(text) => setUsername(text)}
+      />
 
-            <Button title="Login" onPress={handleSubmit} style={styles.button} />
-          </View>
-        )}
-      </Formik>
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+      />
+
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 };
@@ -51,25 +50,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
+  header: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
-  form: {
-    width: '80%',
-  },
   input: {
-    marginBottom: 10,
-  },
-  button: {
-    marginTop: 20,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 10,
+    height: 40,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 10,
   },
 });
-
 
 export default LoginScreen;
