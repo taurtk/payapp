@@ -2,21 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
 
   const handleLogin = () => {
-    // Hardcoded values for demonstration purposes
-    const hardcodedUsername = 'demoUser';
-    const hardcodedPassword = 'demoPassword';
+    // Hardcoded mobile number for demonstration purposes
+    const hardcodedMobileNumber = '1234567890';
 
-    // Check if the entered credentials match the hardcoded values
-    if (username === hardcodedUsername && password === hardcodedPassword) {
+    // Check if the entered mobile number matches the hardcoded value
+    if (mobileNumber === hardcodedMobileNumber) {
       // Navigate to the Home screen on successful login
       navigation.navigate('Dashboard');
     } else {
       // Display an error message or handle the unsuccessful login scenario
-      console.log('Invalid credentials');
+      console.log('Invalid mobile number');
     }
   };
 
@@ -26,17 +24,10 @@ const LoginScreen = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
+        placeholder="Mobile Number"
+        keyboardType="numeric"
+        value={mobileNumber}
+        onChangeText={(text) => setMobileNumber(text)}
       />
 
       <Button title="Login" onPress={handleLogin} />
